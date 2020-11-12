@@ -1,6 +1,6 @@
-﻿//#include <iostream>
+﻿#include <iostream>
 #define _CRT_SECURE_NO_WARNINGS
-#include "head.h"
+//#include "head.h"
 #include <ctime>
 using namespace std;
 
@@ -23,11 +23,24 @@ int main()
     //dt = asctime(gmtm);
     //std::cout << "UTC 日期和时间：" << dt << endl;
 
-    //MyStruct ss;
-    //ss.age = 10;
-    //ss.bb = "3333";
-    //strcpy(ss.name,"999999");
+  /*  MyStruct ss;
+    ss.age = 10;
+    ss.bb = "3333";
+    strcpy(ss.name,"999999");*/
     
+   /* string rr = "22222";
+
+    std::cout << "2222"<< typeid(rr).name() << endl;*/
+
+    int i = 99;
+    int* p;
+    p = &i;
+    cout << p << endl;
+    cout << *p << endl;
+
+
+
+
 
 
     system("pause");

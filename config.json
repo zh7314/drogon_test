@@ -1,51 +1,52 @@
 /* This is a JSON format configuration file
  */
 {
-    /*
+    
     //ssl:The global ssl files setting
-    "ssl": {
-        "cert": "../../trantor/trantor/tests/server.pem",
-        "key": "../../trantor/trantor/tests/server.pem"
-    },
+    // "ssl": {
+    //     "cert": "../../trantor/trantor/tests/server.pem",
+    //     "key": "../../trantor/trantor/tests/server.pem"
+    // },
     "listeners": [
         {
             //address: Ip address,0.0.0.0 by default
             "address": "0.0.0.0",
             //port: Port number
-            "port": 80,
+            "port": 888,
             //https: If true, use https for security,false by default
             "https": false
-        },
-        {
-            "address": "0.0.0.0",
-            "port": 443,
-            "https": true,
-            //cert,key: Cert file path and key file path, empty by default,
-            //if empty, use the global setting
-            "cert": "",
-            "key": "",
-            //use_old_tls: enable the TLS1.0/1.1, false by default
-            "use_old_tls": false
         }
+        // ,
+        // {
+        //     "address": "0.0.0.0",
+        //     "port": 443,
+        //     "https": true,
+        //     //cert,key: Cert file path and key file path, empty by default,
+        //     //if empty, use the global setting
+        //     "cert": "",
+        //     "key": "",
+        //     //use_old_tls: enable the TLS1.0/1.1, false by default
+        //     "use_old_tls": false
+        // }
     ],
     "db_clients": [
         {
             //name: Name of the client,'default' by default
             //"name":"",
             //rdbms: Server type, postgresql,mysql or sqlite3, "postgresql" by default
-            "rdbms": "postgresql",
+            "rdbms": "mysql",
             //filename: Sqlite3 db file name
             //"filename":"",
             //host: Server address,localhost by default
-            "host": "127.0.0.1",
+            "host": "192.168.3.15",
             //port: Server port, 5432 by default
-            "port": 5432,
+            "port": 3306,
             //dbname: Database name
-            "dbname": "test",
+            "dbname": "shop",
             //user: 'postgres' by default
-            "user": "",
+            "user": "zx",
             //passwd: '' by default
-            "passwd": "",
+            "passwd": "zx",
             //is_fast: false by default, if it is true, the client is faster but user can't call
             //any synchronous interface of it.
             "is_fast": false,
@@ -56,7 +57,7 @@
             //connections per IO thread, otherwise it is the total number of all connections.  
             "connection_number": 1
         }
-    ],*/
+    ],
     "app": {
         //threads_num: The number of IO threads, 1 by default, if the value is set to 0, the number of threads
         //is the number of CPU cores
@@ -177,7 +178,7 @@
                 "post"
             ],
             "filters": [
-                "FilterClassName"
+                
             ]
         }],
         //idle_connection_timeout: Defaults to 60 seconds, the lifetime 

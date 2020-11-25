@@ -18,8 +18,7 @@ void TestCtrl::name(const HttpRequestPtr &req,
 
 
     auto clientPtr = drogon::app().getDbClient();
-    auto f = clientPtr->execSqlAsyncFuture("select * from admin where id=$1",
-                                       "default");
+    auto f = clientPtr->execSqlAsyncFuture("select * from admin");
 
     auto r = f.get(); // Block until we get the result or catch the exception;
     std::cout << r.size() << " rows selected!" << std::endl;

@@ -15,10 +15,10 @@ void TestCtrl::tt(const HttpRequestPtr &req,
 void TestCtrl::name(const HttpRequestPtr &req,
              std::function<void (const HttpResponsePtr &)> &&callback) const
 {
-    Json::Value res;
-    res["result"]="ok";
-    res["user_name"]="Jack";
-    res["gender"]=1;
-    auto rr=HttpResponse::newHttpJsonResponse(res);
-    callback(rr);
+    Json::Value ret;
+    ret["result"]="ok";
+    ret["user_name"]="Jack";
+    ret["gender"]=1;
+    auto resp=HttpResponse::newHttpJsonResponse(ret);
+    callback(resp);
 }

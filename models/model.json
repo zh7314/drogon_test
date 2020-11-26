@@ -4,11 +4,11 @@
     //filename: sqlite3 db file name
     //"filename":"",
     //host: server address,localhost by default;
-    "host": "192.168.3.15",
+    "host": "172.18.1.9",
     //port: server port, 5432 by default;
     "port": 3306,
     //dbname: Database name;
-    "dbname": "shop",
+    "dbname": "v2",
     //schema: valid for postgreSQL, "public" by default;
     "schema": "public",
     //user: User name
@@ -19,7 +19,7 @@
     //means use the default character set.
     //"client_encoding": "",
     //table: An array of tables to be modelized. if the array is empty, all revealed tables are modelized.
-    "tables": ["admin"],
+    "tables": [],
     "restful_api_controllers": {
         "enabled": false,
         // resource_uri: The URI to access the resource, the default value 

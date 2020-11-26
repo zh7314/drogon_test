@@ -4,7 +4,7 @@
     //filename: sqlite3 db file name
     //"filename":"",
     //host: server address,localhost by default;
-    "host": "172.18.1.9",
+    "host": "127.0.0.1",
     //port: server port, 5432 by default;
     "port": 3306,
     //dbname: Database name;

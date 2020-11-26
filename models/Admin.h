@@ -135,6 +135,7 @@ class Admin
 
     ///Set the value of the column create_time
     void setCreateTime(const ::trantor::Date &pCreateTime) noexcept;
+    void setCreateTimeToNull() noexcept;
 
 
     /**  For column update_time  */
@@ -145,6 +146,7 @@ class Admin
 
     ///Set the value of the column update_time
     void setUpdateTime(const ::trantor::Date &pUpdateTime) noexcept;
+    void setUpdateTimeToNull() noexcept;
 
 
     /**  For column remark  */
@@ -358,6 +360,7 @@ class Admin
 
     ///Set the value of the column token_time
     void setTokenTime(const ::trantor::Date &pTokenTime) noexcept;
+    void setTokenTimeToNull() noexcept;
 
 
     /**  For column status  */
@@ -390,6 +393,7 @@ class Admin
 
     ///Set the value of the column weixin_token_time
     void setWeixinTokenTime(const ::trantor::Date &pWeixinTokenTime) noexcept;
+    void setWeixinTokenTimeToNull() noexcept;
 
 
     /**  For column weixin_id  */
@@ -475,17 +479,15 @@ class Admin
         needSelection = false;
             sql += "id,";
             ++parametersCount;
-        sql += "create_time,";
-        ++parametersCount;
-        if(!dirtyFlag_[1])
+        if(dirtyFlag_[1])
         {
-            needSelection=true;
+            sql += "create_time,";
+            ++parametersCount;
         }
-        sql += "update_time,";
-        ++parametersCount;
-        if(!dirtyFlag_[2])
+        if(dirtyFlag_[2])
         {
-            needSelection=true;
+            sql += "update_time,";
+            ++parametersCount;
         }
         if(dirtyFlag_[3])
         {
@@ -583,11 +585,10 @@ class Admin
             sql += "token,";
             ++parametersCount;
         }
-        sql += "token_time,";
-        ++parametersCount;
-        if(!dirtyFlag_[21])
+        if(dirtyFlag_[21])
         {
-            needSelection=true;
+            sql += "token_time,";
+            ++parametersCount;
         }
         sql += "status,";
         ++parametersCount;
@@ -600,11 +601,10 @@ class Admin
             sql += "weixin_token,";
             ++parametersCount;
         }
-        sql += "weixin_token_time,";
-        ++parametersCount;
-        if(!dirtyFlag_[24])
+        if(dirtyFlag_[24])
         {
-            needSelection=true;
+            sql += "weixin_token_time,";
+            ++parametersCount;
         }
         if(dirtyFlag_[25])
         {
@@ -626,19 +626,11 @@ class Admin
             sql.append("?,");
 
         } 
-        else
-        {
-            sql +="default,";
-        }
         if(dirtyFlag_[2])
         {
             sql.append("?,");
 
         } 
-        else
-        {
-            sql +="default,";
-        }
         if(dirtyFlag_[3])
         {
             sql.append("?,");
@@ -758,10 +750,6 @@ class Admin
             sql.append("?,");
 
         } 
-        else
-        {
-            sql +="default,";
-        }
         if(dirtyFlag_[22])
         {
             sql.append("?,");
@@ -781,10 +769,6 @@ class Admin
             sql.append("?,");
 
         } 
-        else
-        {
-            sql +="default,";
-        }
         if(dirtyFlag_[25])
         {
             sql.append("?,");

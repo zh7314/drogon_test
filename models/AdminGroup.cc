@@ -29,8 +29,8 @@ const std::string AdminGroup::tableName = "admin_group";
 
 const std::vector<typename AdminGroup::MetaData> AdminGroup::metaData_={
 {"id","uint64_t","bigint(20) unsigned",8,1,1,1},
-{"create_time","::trantor::Date","datetime",0,0,0,1},
-{"update_time","::trantor::Date","datetime",0,0,0,1},
+{"create_time","::trantor::Date","datetime",0,0,0,0},
+{"update_time","::trantor::Date","datetime",0,0,0,0},
 {"remark","std::string","varchar(200)",200,0,0,0},
 {"is_delete","int8_t","tinyint(1)",1,0,0,1},
 {"parent_group_id","uint32_t","int(10) unsigned",4,0,0,1},
@@ -762,6 +762,11 @@ void AdminGroup::setCreateTime(const ::trantor::Date &pCreateTime) noexcept
 }
 
 
+void AdminGroup::setCreateTimeToNull() noexcept
+{
+    createTime_.reset();
+    dirtyFlag_[1] = true;
+}
 
 
 const ::trantor::Date &AdminGroup::getValueOfUpdateTime() const noexcept
@@ -782,6 +787,11 @@ void AdminGroup::setUpdateTime(const ::trantor::Date &pUpdateTime) noexcept
 }
 
 
+void AdminGroup::setUpdateTimeToNull() noexcept
+{
+    updateTime_.reset();
+    dirtyFlag_[2] = true;
+}
 
 
 const std::string &AdminGroup::getValueOfRemark() const noexcept
@@ -1920,8 +1930,7 @@ bool AdminGroup::validJsonOfField(size_t index,
         case 1:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {
@@ -1932,8 +1941,7 @@ bool AdminGroup::validJsonOfField(size_t index,
         case 2:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {

@@ -120,6 +120,7 @@ class AdminGroup
 
     ///Set the value of the column create_time
     void setCreateTime(const ::trantor::Date &pCreateTime) noexcept;
+    void setCreateTimeToNull() noexcept;
 
 
     /**  For column update_time  */
@@ -130,6 +131,7 @@ class AdminGroup
 
     ///Set the value of the column update_time
     void setUpdateTime(const ::trantor::Date &pUpdateTime) noexcept;
+    void setUpdateTimeToNull() noexcept;
 
 
     /**  For column remark  */
@@ -276,17 +278,15 @@ class AdminGroup
         needSelection = false;
             sql += "id,";
             ++parametersCount;
-        sql += "create_time,";
-        ++parametersCount;
-        if(!dirtyFlag_[1])
+        if(dirtyFlag_[1])
         {
-            needSelection=true;
+            sql += "create_time,";
+            ++parametersCount;
         }
-        sql += "update_time,";
-        ++parametersCount;
-        if(!dirtyFlag_[2])
+        if(dirtyFlag_[2])
         {
-            needSelection=true;
+            sql += "update_time,";
+            ++parametersCount;
         }
         if(dirtyFlag_[3])
         {
@@ -347,19 +347,11 @@ class AdminGroup
             sql.append("?,");
 
         } 
-        else
-        {
-            sql +="default,";
-        }
         if(dirtyFlag_[2])
         {
             sql.append("?,");
 
         } 
-        else
-        {
-            sql +="default,";
-        }
         if(dirtyFlag_[3])
         {
             sql.append("?,");

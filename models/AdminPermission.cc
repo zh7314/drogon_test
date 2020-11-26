@@ -32,8 +32,8 @@ const std::string AdminPermission::tableName = "admin_permission";
 
 const std::vector<typename AdminPermission::MetaData> AdminPermission::metaData_={
 {"id","uint64_t","bigint(20) unsigned",8,1,1,1},
-{"create_time","::trantor::Date","datetime",0,0,0,1},
-{"update_time","::trantor::Date","datetime",0,0,0,1},
+{"create_time","::trantor::Date","datetime",0,0,0,0},
+{"update_time","::trantor::Date","datetime",0,0,0,0},
 {"remark","std::string","varchar(200)",200,0,0,0},
 {"is_delete","int8_t","tinyint(1)",1,0,0,1},
 {"parent_permission_id","uint32_t","int(10) unsigned",4,0,0,1},
@@ -891,6 +891,11 @@ void AdminPermission::setCreateTime(const ::trantor::Date &pCreateTime) noexcept
 }
 
 
+void AdminPermission::setCreateTimeToNull() noexcept
+{
+    createTime_.reset();
+    dirtyFlag_[1] = true;
+}
 
 
 const ::trantor::Date &AdminPermission::getValueOfUpdateTime() const noexcept
@@ -911,6 +916,11 @@ void AdminPermission::setUpdateTime(const ::trantor::Date &pUpdateTime) noexcept
 }
 
 
+void AdminPermission::setUpdateTimeToNull() noexcept
+{
+    updateTime_.reset();
+    dirtyFlag_[2] = true;
+}
 
 
 const std::string &AdminPermission::getValueOfRemark() const noexcept
@@ -2380,8 +2390,7 @@ bool AdminPermission::validJsonOfField(size_t index,
         case 1:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {
@@ -2392,8 +2401,7 @@ bool AdminPermission::validJsonOfField(size_t index,
         case 2:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {

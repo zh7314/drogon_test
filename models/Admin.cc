@@ -44,8 +44,8 @@ const std::string Admin::tableName = "admin";
 
 const std::vector<typename Admin::MetaData> Admin::metaData_={
 {"id","uint64_t","bigint(20) unsigned",8,1,1,1},
-{"create_time","::trantor::Date","datetime",0,0,0,1},
-{"update_time","::trantor::Date","datetime",0,0,0,1},
+{"create_time","::trantor::Date","datetime",0,0,0,0},
+{"update_time","::trantor::Date","datetime",0,0,0,0},
 {"remark","std::string","varchar(200)",200,0,0,0},
 {"is_delete","int8_t","tinyint(1)",1,0,0,1},
 {"shop_id","int64_t","bigint(20)",8,0,0,1},
@@ -64,10 +64,10 @@ const std::vector<typename Admin::MetaData> Admin::metaData_={
 {"is_admin","uint8_t","tinyint(1) unsigned",1,0,0,1},
 {"is_shop_admin","uint8_t","tinyint(1) unsigned",1,0,0,1},
 {"token","std::string","varchar(32)",32,0,0,0},
-{"token_time","::trantor::Date","datetime",0,0,0,1},
+{"token_time","::trantor::Date","datetime",0,0,0,0},
 {"status","int8_t","tinyint(1)",1,0,0,1},
 {"weixin_token","std::string","varchar(32)",32,0,0,0},
-{"weixin_token_time","::trantor::Date","datetime",0,0,0,1},
+{"weixin_token_time","::trantor::Date","datetime",0,0,0,0},
 {"weixin_id","int32_t","int(100)",4,0,0,0}
 };
 const std::string &Admin::getColumnName(size_t index) noexcept(false)
@@ -1587,6 +1587,11 @@ void Admin::setCreateTime(const ::trantor::Date &pCreateTime) noexcept
 }
 
 
+void Admin::setCreateTimeToNull() noexcept
+{
+    createTime_.reset();
+    dirtyFlag_[1] = true;
+}
 
 
 const ::trantor::Date &Admin::getValueOfUpdateTime() const noexcept
@@ -1607,6 +1612,11 @@ void Admin::setUpdateTime(const ::trantor::Date &pUpdateTime) noexcept
 }
 
 
+void Admin::setUpdateTimeToNull() noexcept
+{
+    updateTime_.reset();
+    dirtyFlag_[2] = true;
+}
 
 
 const std::string &Admin::getValueOfRemark() const noexcept
@@ -2102,6 +2112,11 @@ void Admin::setTokenTime(const ::trantor::Date &pTokenTime) noexcept
 }
 
 
+void Admin::setTokenTimeToNull() noexcept
+{
+    tokenTime_.reset();
+    dirtyFlag_[21] = true;
+}
 
 
 const int8_t &Admin::getValueOfStatus() const noexcept
@@ -2172,6 +2187,11 @@ void Admin::setWeixinTokenTime(const ::trantor::Date &pWeixinTokenTime) noexcept
 }
 
 
+void Admin::setWeixinTokenTimeToNull() noexcept
+{
+    weixinTokenTime_.reset();
+    dirtyFlag_[24] = true;
+}
 
 
 const int32_t &Admin::getValueOfWeixinId() const noexcept
@@ -4295,8 +4315,7 @@ bool Admin::validJsonOfField(size_t index,
         case 1:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {
@@ -4307,8 +4326,7 @@ bool Admin::validJsonOfField(size_t index,
         case 2:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {
@@ -4632,8 +4650,7 @@ bool Admin::validJsonOfField(size_t index,
         case 21:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {
@@ -4676,8 +4693,7 @@ bool Admin::validJsonOfField(size_t index,
         case 24:
             if(pJson.isNull())
             {
-                err="The " + fieldName + " column cannot be null";
-                return false;
+                return true;
             }
             if(!pJson.isString())
             {

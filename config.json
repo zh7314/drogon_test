@@ -38,11 +38,11 @@
             //filename: Sqlite3 db file name
             //"filename":"",
             //host: Server address,localhost by default
-            "host": "192.168.3.15",
+            "host": "127.0.0.1",
             //port: Server port, 5432 by default
             "port": 3306,
             //dbname: Database name
-            "dbname": "shop",
+            "dbname": "v2",
             //user: 'postgres' by default
             "user": "zx",
             //passwd: '' by default

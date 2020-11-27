@@ -1,5 +1,5 @@
 #include "TestCtrl.h"
-#include "../models/Admin.h"
+#include "../models/News.h"
 #include <exception> 
 
 using namespace web;
@@ -12,7 +12,7 @@ void TestCtrl::name(const HttpRequestPtr &req,
 {
     try{
         auto clientPtr = drogon::app().getDbClient();
-        // auto f = clientPtr->execSqlAsyncFuture("select * from admin");
+        // auto f = clientPtr->execSqlAsyncFuture("select * from news");
         // auto r = f.get(); // Block until we get the result or catch the exception;
         // std::cout << r.size() << " rows zzzzzzzzzzzzzzzzzzzzzzzz!" << std::endl;
         // int i = 0;
@@ -20,14 +20,19 @@ void TestCtrl::name(const HttpRequestPtr &req,
         // {
         //     std::cout << i++ << ": user name is " << row["real_name"].as<std::string>() << std::endl;
         // }
-        Mapper<Admin> mp(clientPtr);
+        Mapper<News> mp(clientPtr);
         // std::vector<Admin> uu = mp.orderBy(Admin::Cols::_id).limit(25).offset(0).findAll();
 
-        auto iii = mp.count();
-        std::cout << iii << " rows 111111111111111!" << std::endl;
+        // auto iii = mp.count();
+        // std::cout << iii << " rows 111111111111111!" << std::endl;
 
-        auto uu = mp.orderBy(Admin::Cols::_id).limit(5).offset(5).findAll();
+        std::vector<News> uu = mp.orderBy(News::Cols::_id).limit(15).offset(0).findAll();
         std::cout << uu.size() << " rows 2222222222222222!" << std::endl;
+        int i = 0;
+         for (auto row : uu)
+        {
+            std::cout << i++ << ": user name is " << *row.getId() << std::endl;
+        }
 
     }catch (const DrogonDbException &e){
         std::cout << "error:" << e.base().what() << std::endl;

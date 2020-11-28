@@ -1,16 +1,22 @@
 #include "TestCtrl.h"
 #include "../models/News.h"
-#include <exception> 
+#include <exception>
 
 using namespace web;
 using namespace drogon_model::v2;
 using namespace drogon::orm;
-
+using namespace drogon;
 
 void TestCtrl::name(const HttpRequestPtr &req,
-             std::function<void (const HttpResponsePtr &)> &&callback) const
+                    std::function<void(const HttpResponsePtr &)> &&callback) const
 {
-    try{
+    Json::Value ret;
+    ret["result"] = "33";
+    ret["user_name"] = "Jack";
+    ret["gender"] = 1;
+    auto resp = HttpResponse::newHttpJsonResponse(ret);
+    try
+    {
         auto clientPtr = drogon::app().getDbClient();
         // auto f = clientPtr->execSqlAsyncFuture("select * from news");
         // auto r = f.get(); // Block until we get the result or catch the exception;
@@ -26,31 +32,36 @@ void TestCtrl::name(const HttpRequestPtr &req,
         // auto iii = mp.count();
         // std::cout << iii << " rows 111111111111111!" << std::endl;
 
-        std::vector<News> uu = mp.orderBy(News::Cols::_id).limit(15).offset(0).findAll();
+        std::vector<News> uu = mp.orderBy(News::Cols::_id).limit(20).offset(0).findAll();
         std::cout << uu.size() << " rows 2222222222222222!" << std::endl;
         int i = 0;
-         for (auto row : uu)
+        for (auto row : uu)
         {
             std::cout << i++ << ": user name is " << *row.getId() << std::endl;
         }
+        unsigned long id;
+        auto para = req->getParameter("id");
 
-    }catch (const DrogonDbException &e){
-        std::cout << "error:" << e.base().what() << std::endl;
+        id = std::stoul(para);
+        // throw std::exception("333333333");
     }
-    Json::Value ret;
-    ret["result"]="33";
-    ret["user_name"]="Jack";
-    ret["gender"]=1;
-    auto resp=HttpResponse::newHttpJsonResponse(ret);
+    catch (std::exception &e)
+    {
+        ret["msg"] = e.what();
+        std::cout << "error:" << e.what() << std::endl;
+        resp->setStatusCode(HttpStatusCode::k400BadRequest);
+        callback(resp);
+    }
+
     callback(resp);
 }
 void TestCtrl::tt(const HttpRequestPtr &req,
-           std::function<void (const HttpResponsePtr &)> &&callback)
+                  std::function<void(const HttpResponsePtr &)> &&callback)
 {
     Json::Value ret;
-    ret["result"]="ok11111";
-    ret["token"]=drogon::utils::getUuid();
+    ret["result"] = "ok11111";
+    ret["token"] = drogon::utils::getUuid();
     ret["name"] = "zx";
-    auto resp=HttpResponse::newHttpJsonResponse(ret);
+    auto resp = HttpResponse::newHttpJsonResponse(ret);
     callback(resp);
 }

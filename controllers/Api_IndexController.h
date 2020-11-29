@@ -2,15 +2,15 @@
 
 #include <drogon/HttpController.h>
 using namespace drogon;
-namespace web
+namespace api
 {
-class IndexCtrl:public drogon::HttpController<IndexCtrl>
+class Api_IndexController:public drogon::HttpController<Api_IndexController>
 {
   public:
     METHOD_LIST_BEGIN
 
-    ADD_METHOD_TO(IndexCtrl::index,"/",Get);
-    ADD_METHOD_TO(IndexCtrl::news_detail,"/news_detail?news_id={1}",Get);
+    ADD_METHOD_TO(Api_IndexController::index,"/api/index",Get);
+    ADD_METHOD_TO(Api_IndexController::news_detail,"/api/news_detail",Get);
 
     METHOD_LIST_END
 

@@ -1,4 +1,4 @@
-#include "IndexCtrl.h"
+#include "Web_IndexController.h"
 #include "../models/News.h"
 #include <exception>
 #include <trantor/utils/Date.h>
@@ -7,7 +7,7 @@ using namespace web;
 using namespace drogon_model::v2;
 using namespace drogon::orm;
 
-void IndexCtrl::index(const HttpRequestPtr &req,
+void Web_IndexController::index(const HttpRequestPtr &req,
                       std::function<void(const HttpResponsePtr &)> &&callback)
 {
     //控制台中文异常
@@ -34,7 +34,7 @@ void IndexCtrl::index(const HttpRequestPtr &req,
     callback(resp);
 }
 
-void IndexCtrl::news_detail(const HttpRequestPtr &req,
+void Web_IndexController::news_detail(const HttpRequestPtr &req,
                             std::function<void(const HttpResponsePtr &)> &&callback, std::string news_id)
 {
     //控制台中文异常

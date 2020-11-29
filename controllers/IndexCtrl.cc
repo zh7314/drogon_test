@@ -10,49 +10,52 @@ using namespace drogon::orm;
 void IndexCtrl::index(const HttpRequestPtr &req,
                       std::function<void(const HttpResponsePtr &)> &&callback)
 {
-    //同步查询
+    //控制台中文异常
+    std::system("chcp 65001");
+
     auto clientPtr = drogon::app().getDbClient();
+    //同步查询
     Mapper<News> mp(clientPtr);
-    std::vector<News> uu = mp.orderBy(News::Cols::_id).limit(15).offset(0).findAll();
-    std::cout << uu.size() << " rows 111111111111111111111111111!" << std::endl;
-   
+    std::vector<News> news_list = mp.orderBy(News::Cols::_id).limit(15).offset(0).findAll();
+    std::cout << news_list.size() << " rows 111111111111111111111111111!" << std::endl;
+    //异步查询
+    auto f = clientPtr->execSqlAsyncFuture("select * from news order by create_time desc limit 15");
+    auto result = f.get();
+
+    std::cout << typeid(result).name() << std::endl;
+    std::cout << result.size() << " rows selected!" << std::endl;
+
     HttpViewData data;
     data.insert("title", "zxxxxxxxxx");
-    data.insert("news", uu);
+    data.insert("news1", news_list);
+    data.insert("news2", result);
 
-    // data.insert("parameters", para);
     auto resp = HttpResponse::newHttpViewResponse("Index.csp", data);
     callback(resp);
 }
 
-void IndexCtrl::news(const HttpRequestPtr &req,
-                     std::function<void(const HttpResponsePtr &)> &&callback, std::string news_id)
+void IndexCtrl::news_detail(const HttpRequestPtr &req,
+                            std::function<void(const HttpResponsePtr &)> &&callback, std::string news_id)
 {
-     //同步查询
-    auto clientPtr = drogon::app().getDbClient();
-    Mapper<News> mp(clientPtr);
-    std::vector<News> uu = mp.orderBy(News::Cols::_id).limit(15).offset(0).findAll();
+    //控制台中文异常
     std::system("chcp 65001");
 
-    std::cout << uu.size() << " rows xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx!" << std::endl;
-    int i = 0;
-    for (auto rr : uu)
-    {
-        trantor::Date now = *rr.getCreateTime();
+    auto clientPtr = drogon::app().getDbClient();
+    //同步查询
+    Mapper<News> mp(clientPtr);
+    std::vector<News> news1 = mp.findBy(Criteria(News::Cols::_id, CompareOperator::EQ, news_id));
+    std::cout << news_id << " rows 111111111111111111111111111!" << std::endl;
+    
+    std::cout << news1.size() << " rows 111111111111111111111111111!" << std::endl;
 
-        std::cout << now.toDbStringLocal()<< std::endl;
-        // std::cout << *rr.getCreateTime() << std::endl;
-        std::cout << *rr.getId() << std::endl;
-        // std::cout << *rr.getTitle() << std::endl;
-    }
     
 
     HttpViewData data;
     data.insert("title", "zxxxxxxxxx");
     data.insert("news_id", news_id);
-    data.insert("news", uu);
-    auto resp = HttpResponse::newHttpViewResponse("News.csp", data);
+    data.insert("news1", news1);
 
-    // auto resp = HttpResponse::newHttpViewResponse("Index.csp", data);
+    auto resp = HttpResponse::newHttpViewResponse("NewsDetail.csp", data);
+
     callback(resp);
 }

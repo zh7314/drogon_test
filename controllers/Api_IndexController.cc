@@ -7,8 +7,6 @@ using namespace api;
 using namespace drogon_model::v2;
 using namespace drogon::orm;
 
-
-
 void Api_IndexController::index(const HttpRequestPtr &req,
                                 std::function<void(const HttpResponsePtr &)> &&callback)
 {
@@ -35,7 +33,7 @@ void Api_IndexController::index(const HttpRequestPtr &req,
     }
 
     Json::Value vt;
-    int i= 0;
+    int i = 0;
     for (auto rt : result)
     {
         vt[i]["id"] = rt["id"].as<std::string>();
@@ -43,7 +41,6 @@ void Api_IndexController::index(const HttpRequestPtr &req,
         vt[i]["create_time"] = rt["create_time"].as<std::string>();
         i++;
     }
-
 
     Json::Value ret;
     ret["result"] = "ok";
@@ -60,16 +57,21 @@ void Api_IndexController::news_detail(const HttpRequestPtr &req,
     //控制台中文异常
     std::system("chcp 65001");
 
+    std::cout << "111111111111111111111,news_id=" << news_id << std::endl;
     auto clientPtr = drogon::app().getDbClient();
     //同步查询
     Mapper<News> mp(clientPtr);
     std::vector<News> news1 = mp.findBy(Criteria(News::Cols::_id, CompareOperator::EQ, news_id));
-    std::cout << news_id << " rows 111111111111111111111111111!" << std::endl;
+    // Json::Value vl;
+    // vl.append(news1[0].toJson());
 
-    std::cout << news1.size() << " rows 111111111111111111111111111!" << std::endl;
+    //异步查询,window10下编译会通过，但是会出现"Unknown column '$1' in 'where clause'" 导致程序奔溃
+    // auto f = clientPtr->execSqlSync("select id,title,create_time from news where id = $1", news_id);
+    // std::cout << f.size() << " rows selected!" << std::endl;
 
     Json::Value ret;
     ret["result"] = "ok";
+    ret["news"] = news1[0].toJson();
     auto resp = HttpResponse::newHttpJsonResponse(ret);
     callback(resp);
 }

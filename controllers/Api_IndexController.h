@@ -10,7 +10,7 @@ class Api_IndexController:public drogon::HttpController<Api_IndexController>
     METHOD_LIST_BEGIN
 
     ADD_METHOD_TO(Api_IndexController::index,"/api/index",Get);
-    ADD_METHOD_TO(Api_IndexController::news_detail,"/api/news_detail",Get);
+    ADD_METHOD_TO(Api_IndexController::news_detail,"/api/news_detail?news_id={1}",Get);
 
     METHOD_LIST_END
 

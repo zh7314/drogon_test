@@ -66,12 +66,20 @@ void Api_IndexController::news_detail(const HttpRequestPtr &req,
     // vl.append(news1[0].toJson());
 
     //异步查询,window10下编译会通过，但是会出现"Unknown column '$1' in 'where clause'" 导致程序奔溃
-    // auto f = clientPtr->execSqlSync("select id,title,create_time from news where id = $1", news_id);
-    // std::cout << f.size() << " rows selected!" << std::endl;
+    auto f = clientPtr->execSqlAsyncFuture("select id,title,create_time from news where id = ?", news_id);
+    auto result = f.get();
+    std::cout << result.size() << " rows selected!" << std::endl;
+
+    Json::Value vt;
+
+    vt["id"] = result[0]["id"].as<std::string>();
+    vt["title"] = result[0]["title"].as<std::string>();
+    vt["create_time"] = result[0]["create_time"].as<std::string>();
 
     Json::Value ret;
     ret["result"] = "ok";
-    ret["news"] = news1[0].toJson();
+    // ret["news"] = news1[0].toJson();
+    ret["news1"] = vt;
     auto resp = HttpResponse::newHttpJsonResponse(ret);
     callback(resp);
 }

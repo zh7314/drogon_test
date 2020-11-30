@@ -65,7 +65,7 @@ void Api_IndexController::news_detail(const HttpRequestPtr &req,
     // Json::Value vl;
     // vl.append(news1[0].toJson());
 
-    //异步查询,window10下编译会通过，但是会出现"Unknown column '$1' in 'where clause'" 导致程序奔溃
+    //异步查询,参数sql是sql语句的字符串，如果有需要绑定参数的占位符，使用相应数据库的占位符规则，比如PostgreSQL的占位符是$1,$2..，而MySQL的占位符是？。
     auto f = clientPtr->execSqlAsyncFuture("select id,title,create_time from news where id = ?", news_id);
     auto result = f.get();
     std::cout << result.size() << " rows selected!" << std::endl;
